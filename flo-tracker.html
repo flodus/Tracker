@@ -1397,13 +1397,15 @@ function openDay(ds){
     <div class="mdt">${FR_D[dw]} ${d.getDate()} ${FR_M[d.getMonth()]} ${d.getFullYear()}</div>
     ${stBadge}`;
   objsOnDay.forEach(g=>{
+    const gStatus=g.status==='ok'?'<span class="tag gn">✓ Atteint 🎉</span>':g.status==='ko'?'<span class="tag rd">✗ Pas atteint</span>':'';
     html+=`<div class="msec" style="margin-top:10px"><div class="mst">OBJECTIF</div>
       <div style="font-size:14px;font-weight:700;color:var(--purple);margin-bottom:6px">${g.label}</div>
       <div style="font-size:12px;color:var(--muted);margin-bottom:8px">${g.why}</div>
-      <div style="display:flex;gap:8px;margin-bottom:6px">
+      ${gStatus?`<div style="margin-bottom:8px">${gStatus}</div><button class="btn dk sm" onclick="setGoalStatus('${g.id}',null);openDay('${ds}')">↺ Réinitialiser</button>`:`<div style="display:flex;gap:8px;margin-bottom:6px">
         <button class="btn g sm" style="flex:1" onclick="setGoalStatus('${g.id}','ok');openDay('${ds}')">✓ Atteint</button>
         <button class="btn rd sm" style="flex:1" onclick="setGoalStatus('${g.id}','ko');openDay('${ds}')">✗ Pas atteint</button>
-      </div></div>`;
+      </div>`}
+    </div>`;
   });
   if(sess.length){
     html+=`<div class="msec" style="margin-top:10px"><div class="mst">SÉANCES</div>`;
